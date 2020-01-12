@@ -4,8 +4,8 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bp = require("body-parser");
-const dotenv = require('dotenv');
-const jwtverifier = require('./middlewares/jwtverifier');
+const dotenv = require("dotenv");
+const jwtverifier = require("./middlewares/jwtverifier");
 
 dotenv.config();
 app.use(cors());
@@ -15,62 +15,19 @@ app.use(require("morgan")("dev"));
 
 const port = process.env.PORT || 5000;
 mongoose.Promise = global.Promise;
-//"mongodb://127.0.0.1:27017/authdb" ||
+
 // const mongodbAPI = "mongodb://127.0.0.1:27017/patronDB";
-const mongodbAPI = process.env.DB_CONN;
+const mongodbAPI = process.env.DB_CONN || "mongodb://127.0.0.1:27017/patronDB";
 app.use(require("morgan")("dev"));
 
-var jwthelper = (req, res, next) => {
-  console.log("helper .....");
-  const token = req.headers.authorization;
-  //  req.body.token || req.query.token || req.headers['x-access-token']
-  // decode token
-  if (token) {
-    // verifies secret and checks exp
-    jwt.verify(token, jwtsecret, function(err, decoded) {
-      if (err) {
-        console.log(err);
-
-        return res
-          .status(401)
-          .json({ error: true, message: "unauthorized_access" });
-      }
-      if (decoded.type === "regular") {
-        console.log("helper oK");
-
-        req.id = decoded.id;
-
-        newview
-          .save()
-          .then(result => {})
-          .catch(err => {
-            console.log(err);
-          });
-        next();
-      } else {
-        return res
-          .status(401)
-          .json({ error: true, message: "unauthorized_access" });
-      }
-    });
-  } else {
-    // if there is no token
-    // return an error
-    return res.status(403).send({
-      error: true,
-      message: "no_token_provided."
-    });
-  }
-};
-
 app.use("/auth", require("./routes/auth/auth.router")); //dont add jwt middleware
-// app.use("/reg", require("./routes/register/register.router")); //dont add jwt middleware
+app.use("/reg", require("./routes/register/register.router")); //dont add jwt middleware
 
-app.use("/api", require("./routes/api/api.router"));
+app.use("/api", jwtverifier, require("./routes/api/api.router"));
 
 //Middleware for JWT verification
-app.get('/get', jwtverifier, (req, res) => {
-  res.send({messge: 'From private Route'});
+app.get("/get", jwtverifier, (req, res) => {
+  res.send({ messge: "From private Route" });
 });
 
 try {

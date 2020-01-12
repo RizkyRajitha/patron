@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-saltRounds = 10;
-
 var Schema = mongoose.Schema;
 
 var userRequesterSchema = new Schema({

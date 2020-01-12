@@ -1,27 +1,38 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 //RegisterValidator for registering new users
-const registerValidator = (body) => {
-    const schema = Joi.object({
-        name: Joi.string().min(5).required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().min(6).required()
-    });
+const registerValidator = body => {
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(5)
+      .required(),
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string()
+      .min(6)
+      .required(),
+    nic: Joi.string()
+      .min(9)
+      .required()
+  });
 
-    return Joi.validate(body, schema);
-}
+  return Joi.validate(body, schema);
+};
 
 //LoginValidator for login
-const loginValidator = (body) => {
-    const schema = Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().min(6).required()
-    });
+const loginValidator = body => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string()
+      .min(6)
+      .required()
+  });
 
-    return Joi.validate(body, schema);
-}
-
-
+  return Joi.validate(body, schema);
+};
 
 module.exports.registerValidator = registerValidator;
 module.exports.loginValidator = loginValidator;

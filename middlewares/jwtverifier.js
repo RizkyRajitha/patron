@@ -1,22 +1,32 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const jwtsecret = process.env.JWT_SECRET || "demo";
 
-const verifytoken = (req, res, next) => {
-    const token = req.header('auth-token');
+module.exports = jwthelper = (req, res, next) => {
+  console.log("helper .....");
+  const token = req.headers.authorization;
 
-    if(!token){
-        return res.status(401).send({message: 'Access-Denied!'});
-    }
+  //  req.body.token || req.query.token || req.headers['x-access-token']
+  // decode token
+  if (token) {
+    // verifies secret and checks exp
+    jwt.verify(token, jwtsecret, function(err, decoded) {
+      if (err) {
+        console.log(err);
 
-    try{
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        //Add user object with verified token details/payload to the req and pass
-        req.user = verified;
-        next();
-    }
-    catch(error){
-        console.error(error);
-        res.status(400).send({message: 'Invalid token!'});
-    }
-}
+        return res
+          .status(401)
+          .json({ error: true, message: "unauthorized_access" });
+      }
 
-module.exports = verifytoken;
+      req.id = decoded._id;
+      next();
+    });
+  } else {
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+      error: true,
+      message: "no_token_provided."
+    });
+  }
+};
