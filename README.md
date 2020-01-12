@@ -7,9 +7,10 @@
 POST
 /auth/register
 {
-    "name":"",
+    "firstName":"",
     "email":"",
-    "password":""
+    "password":"",
+    "nic":""
 }
 ```
 
@@ -28,5 +29,32 @@ POST
 test private Route:
 /get
 
-request header: 'auth-token: a valid JWT'
+request header: 'Authorization':' a valid JWT'
+```
+
+###  Api routes for Requester
+
+add new post by Rquestor (private Route):
+
+### api/newpost POST
+```
+{
+"title":"",
+"description": "",
+"estimatedBudget": "",
+"donationTypeAccepted":""
+}
+
+
+request header: 'Authorization':' a valid JWT'
+```
+
+
+add new post by Rquestor (private Route):
+
+### api/getposts GET 
+```
+
+request header: 'Authorization':' a valid JWT'
+
 ```
