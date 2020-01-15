@@ -1,6 +1,6 @@
 const mail = require('@sendgrid/mail');
 
-exports.send = async data => {
+exports.send = data => {
 
     // sendgrid key for authentication
     // Hasintha's SG key
@@ -21,7 +21,7 @@ exports.send = async data => {
         }
       };
 
-      await mail.send(msg)
+      mail.send(msg)
         .then(resSG => {
           console.log('Sendgrid Email sent to: ', msg.to);
           return resSG;
