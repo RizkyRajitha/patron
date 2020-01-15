@@ -1,6 +1,6 @@
 const mail = require('@sendgrid/mail');
 
-export const send = data => {
+exports.send = data => {
 
     // sendgrid key for authentication
     // Hasintha's SG key

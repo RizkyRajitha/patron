@@ -20,7 +20,9 @@ mongoose.Promise = global.Promise;
 const mongodbAPI = process.env.DB_CONN || "mongodb://127.0.0.1:27017/patronDB";
 app.use(require("morgan")("dev"));
 
+// login
 app.use("/auth", require("./routes/auth/auth.router")); //dont add jwt middleware
+// register
 app.use("/reg", require("./routes/register/register.router")); //dont add jwt middleware
 
 app.use("/api", jwtverifier, require("./routes/api/api.router"));
