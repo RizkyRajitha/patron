@@ -1,0 +1,77 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.parallax {
+  /* The image used */
+  /* background-image: url("./998152.jpg"); */
+
+  /* Set a specific height */
+  height: 100vh;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallaxText {
+  color: #ffffff;
+  font-size: 3rem;
+  /* flex: 0.5 0.5; */
+}
+
+.parallaxTextdiv {
+  width: 90%;
+  margin-left: 10%;
+  padding-top: 8%;
+  /* margin-top: 10%; */
+  /* display: flex; */
+}
+.landigpadediv2 {
+  background-color: #666666;
+  /* height: 100vh; */
+  text-align: center;
+  /* width: 100vw;  */
+}
+.text2 {
+  padding-top: 5%;
+  color: black;
+  font-size: 3rem;
+}
+
+.visitblogbtn {
+  margin-top: 1%;
+  background-color: #000000 !important;
+  /* color: #ffffff !important; */
+  /* outline-color: #ffffff !important; */
+}
+
+@media only screen and (max-device-width: 600px) {
+  .parallax {
+    background-position-x: 28%;
+    background-position-y: 19%;
+    /* background-attachment: scroll; */
+  }
+  .visitblogbtn {
+    margin-top: 18%;
+  }
+  .parallaxTextdiv {
+    text-align: center;
+    margin-left: 0%;
+    /* margin-top: 10%; */
+    /* display: flex; */
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .visitblogbtn {
+    margin-top: 8%;
+  }
+}
+
+/* @ :-moz-user-disabled */
+/* at 600px
+background-position-x: 88%;
+background-position-y: 19%; */

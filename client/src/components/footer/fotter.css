@@ -1,0 +1,58 @@
+.landingpagefooter {
+  margin: 0 auto;
+  /* backgroundcolor: "#F8F8F8";
+  bordertop: "1px solid #E7E7E7";
+  textalign: "center"; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  /* background-image: url("../../pages/login/998152.jpg"); */
+  height: 20%;
+  /* width: 90%; */
+  text-align: center;
+}
+
+.landingpagefooterdiv {
+  display: flex;
+}
+
+.landingpagefooterdivitembr {
+  flex: 0;
+  /* justify-content: space-around !important; */
+}
+
+.landingpagefooterdivitem {
+  color: #ffffff;
+  flex: 0.7;
+  justify-content: space-around !important;
+  text-decoration: none;
+}
+
+.landingpagefooterdivitemlink {
+  color: #dfdfdf;
+  flex: 0.7;
+  justify-content: space-around !important;
+}
+
+@media screen and (max-width: 640px) {
+  .landingpagefooterdiv {
+    display: flex;
+    /* flex-direction: column; */
+  }
+  .landingpagefooterdivitembr {
+    flex: 0;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .landingpagefooterdivitembr {
+    flex: 0;
+    /* justify-content: space-around !important; */
+  }
+
+  .landingpagefooterdiv {
+    display: flex;
+    /* flex-direction: column; */
+  }
+}
