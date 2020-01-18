@@ -13,7 +13,7 @@ exports.send = data => {
         subject: 'Welcome to PATRON',
         // text: data.name,
         // html: `<h3>${data.name}</h3>`,d-7c42beb2ea0a4b36ae431d3bd247135c
-        template_id: 'd-7c42beb2ea0a4b36ae431d3bd247135c',
+        template_id: 'd-6d2d7dd4ab724db2b29b4c58a6122b15',
         dynamic_template_data: {
           name: data.name,
           email: 'patron.admin@patronlk',
