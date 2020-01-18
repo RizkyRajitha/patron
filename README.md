@@ -2,10 +2,11 @@
 
 ## Using MongoDB Atlas Cluster - users collection
 
-### Register - Validates & create new user
+### Register - Validates & create new Requester
+### Sends the new user a welcome Email
 ```
 POST
-/auth/register
+/reg/registerRequester
 {
     "firstName":"",
     "email":"",

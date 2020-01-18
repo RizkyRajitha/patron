@@ -13,7 +13,8 @@ const registerValidator = body => {
       .min(6)
       .required(),
     nic: Joi.string()
-      .min(4)
+      .min(10)
+      .max(10)
       .required()
   });
 
