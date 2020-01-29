@@ -1,0 +1,101 @@
+*{
+  padding: 0%;
+  margin: 0%;
+}
+
+.AppContainer {
+  position: relative;
+  max-height: 25vh;
+  max-width: 35vh;
+  padding: 50px;
+  background: #f1f2f6;
+  border-radius: 1vh;
+  margin-left: 80vh;
+  margin-top: 12vh;
+
+}
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background:#f1f2f6;
+  color:#192a56;
+  font-size: 30px;
+}
+
+.Img{
+  max-width: 40%;
+  max-height: 40%;
+}
+/* 
+display: flexbox;
+  margin-left: 75vh;
+  margin-top: 12vh;
+  align-items: center;
+  justify-content: center;
+  height: 25vh;
+  width: 35vh;
+  padding: 8vh;
+  border-radius: 2vh;
+  background: rgb(241, 238, 238); */
+
+.MainLabel{
+  margin-left: 2vh;
+  margin-right: 10vh;
+  margin-top: 2vh;
+}
+
+.p{
+  fontFamily:'Trebuchet MS, Helvetica, sans-serif',
+}
+
+.SocialButtons{
+  margin-bottom: 20vh;
+}
+
+.Cards{
+  background-color: #f1f2f6 ;
+  height: 10vh;
+  width: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5vh;
+  border-radius: 1vh;
+}
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f1f2f6 ;
+  color: black;
+  text-align: center;
+  margin-top: 20vh;
+}
+
+.ProPic{
+  width: 15vh;
+  height: 15vh;
+  border-radius: 100vh;
+}
+
+.Profile{
+  display: table-column;
+  background-color: #575fcf ;
+  height: 90vh;
+  width: 30vh;
+  display: flex;
+  margin: 5vh;
+  border-radius: 2vh;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.CardTitle{
+  font-weight: bold;
+}
