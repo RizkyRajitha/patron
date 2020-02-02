@@ -45,6 +45,7 @@ var userRequesterSchema = new Schema({
   },
   requests: [
     {
+      requestid: { type: String },
       title: { type: String },
       description: { type: String },
       estimatedBudget: { type: String },
