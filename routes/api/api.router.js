@@ -20,5 +20,7 @@ const fileup = multer({ storage: storage });
 router.get("/getposts", apiroutes.getposts);
 router.get("/getallposts", apiroutes.getallposts);
 router.post("/newpost", fileup.array("resobj"), apiroutes.newpost);
+router.post("/donate", apiroutes.donate);
+router.get("/donatordashboard", apiroutes.donatorDashboard);
 
 module.exports = router;

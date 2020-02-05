@@ -27,11 +27,11 @@ app.use("/reg", require("./routes/register/register.router")); //dont add jwt mi
 
 app.use("/api", jwtverifier, require("./routes/api/api.router"));
 
-app.use(
-  "/upload",
-  // jwtverifier,
-  require("./routes/fileupload/fileupload.router")
-);
+// app.use(
+//   "/upload",
+//   // jwtverifier,
+//   require("./routes/fileupload/fileupload.router")
+// );
 
 //Middleware for JWT verification
 app.get("/get", jwtverifier, (req, res) => {

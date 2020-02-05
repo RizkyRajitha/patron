@@ -49,6 +49,7 @@ var userRequesterSchema = new Schema({
       title: { type: String },
       description: { type: String },
       estimatedBudget: { type: String },
+      availableBudget: { type: String },
       donationTypeAccepted: { type: String },
       createdAt: { type: String },
       images: [],

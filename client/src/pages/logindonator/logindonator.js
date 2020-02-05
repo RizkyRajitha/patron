@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./loginRequestor.css";
+import "./logindonator.css";
 import Footer from "../../components/footer/footer";
 import jsonwebtoken from "jsonwebtoken";
 import Swal from "sweetalert2";
@@ -15,14 +15,14 @@ class Login extends Component {
 
   componentDidMount() {
     //M.toast({ html: "I am a toast!" });
-    var jwt = localStorage.getItem("jwtreq");
+    var jwt = localStorage.getItem("jwtdonator");
     console.log("comp mount");
     console.log(jwt);
     try {
       var tk = jsonwebtoken.verify(jwt, "demo");
       if (tk) {
         console.log("loged in");
-        this.props.history.push("/dashboardreqestor");
+        this.props.history.push("/dashboarddonor");
       }
     } catch (error) {
       console.log("not logged in");
@@ -37,7 +37,7 @@ class Login extends Component {
     console.log(this.state.email + this.state.password);
 
     axios
-      .post("/auth/loginrequestor", {
+      .post("/auth/logindonator", {
         email: this.state.email,
         password: this.state.password
       })
@@ -48,9 +48,9 @@ class Login extends Component {
 
         if (body.message === "success") {
           console.log("body - " + body);
-          localStorage.setItem("jwtreq", body.token);
+          localStorage.setItem("jwtdonator", body.token);
 
-          this.props.history.push("/dashboardreqestor");
+          this.props.history.push("/dashboarddonor");
         } else if (body.message === "invalidcredentials") {
           Swal.fire("invalid credentials", "", "error");
         }
@@ -60,39 +60,10 @@ class Login extends Component {
       });
   };
 
-  fileupload = e => {
-    this.setState({ filestoupload: e.target.files });
-
-    var jwt = localStorage.getItem("jwt");
-
-    var config = {
-      headers: {
-        authorization: jwt
-      }
-    };
-
-    const formdata = new FormData();
-
-    for (let index = 0; index < e.target.files.length; index++) {
-      const element = e.target.files[index];
-
-      formdata.append("resobj", element);
-    }
-
-    axios
-      .post("/upload/newpostfiles", formdata, config)
-      .then(result => {
-        console.log(result.body);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   render() {
     return (
       <div>
-        <h1>Login requestor</h1>
+        <h1>Login DOnator</h1>
 
         {/* <input onChange={this.fileupload} type="file" multiple></input> */}
 

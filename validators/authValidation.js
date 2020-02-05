@@ -35,5 +35,25 @@ const loginValidator = body => {
   return Joi.validate(body, schema);
 };
 
+const registerValidatorDonator = body => {
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .required(),
+    lastName: Joi.string()
+      .min(3)
+      .required(),
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string()
+      .min(3)
+      .required()
+  });
+
+  return Joi.validate(body, schema);
+};
+
+module.exports.registerValidatorDonator = registerValidatorDonator;
 module.exports.registerValidator = registerValidator;
 module.exports.loginValidator = loginValidator;

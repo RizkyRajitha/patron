@@ -16,11 +16,12 @@ const Imgtag = props => {
   );
 };
 
-const Dashboard = () => {
+const Dashboard = props => {
   const [previoesRequests, setprevioesRequests] = useState([]);
+  const [Username, setUsername] = useState("");
 
   useEffect(() => {
-    var jwt = localStorage.getItem("jwt");
+    var jwt = localStorage.getItem("jwtreq");
     console.log("comp mount");
     console.log(jwt);
     try {
@@ -37,23 +38,24 @@ const Dashboard = () => {
         .get("/api/getposts", config)
         .then(res => {
           console.log(res.data);
-          setprevioesRequests(res.data);
+          setprevioesRequests(res.data.requests);
+          setUsername(res.data.name);
         })
         .catch(err => {
           console.log(err);
         });
     } catch (error) {
       console.log("not logged in");
-      this.props.history.push("/loginrequestor");
+      props.history.push("/loginrequestor");
     }
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("jwt");
-    this.props.history.push("/");
+    localStorage.removeItem("jwtreq");
+    props.history.push("/loginrequestor");
   };
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = data => {
     console.log(data);
@@ -110,6 +112,8 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard requestor</h1>
       <button onClick={() => logout()}> logout </button>
+
+      <h1>{Username}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {" "}

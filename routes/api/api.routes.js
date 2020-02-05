@@ -1,4 +1,5 @@
 const Requstor = require("../../models/usersRequesters");
+const Donator = require("../../models/usersDonator");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -10,12 +11,42 @@ cloudinary.config({
   api_secret: process.env.clodinary_api_secret || ""
 });
 
+exports.donatorDashboard = async (req, res) => {
+  console.log("getting posts");
+
+  var donationSum = 0;
+
+  Donator.findOne({ _id: req.id })
+    .then(doc => {
+      doc.donations.forEach(element => {
+        element.donationsHis.forEach(element2 => {
+          donationSum += element2.amount;
+        });
+      });
+
+      var payload = {
+        donations: donationSum,
+        name: doc.firstName
+      };
+
+      res.json(payload);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 exports.getposts = async (req, res) => {
   console.log("getting posts");
 
   Requstor.findOne({ _id: req.id })
     .then(doc => {
-      res.json(doc.requests);
+      var payload = {
+        requests: doc.requests,
+        name: doc.firstName
+      };
+
+      res.json(payload);
     })
     .catch(err => {
       console.log(err);
@@ -28,10 +59,10 @@ exports.getallposts = (req, res) => {
       var payload = [];
 
       docs.forEach(element => {
-        payload.push(element.requests);
+       payload =  payload.concat(element.requests);
       });
 
-      res.json(payload);
+      res.json({ requests: payload });
     })
     .catch(err => {
       console.log(err);
@@ -84,6 +115,10 @@ exports.newpost = (req, res) => {
     .catch(err => {
       console.log(err);
     });
+};
+
+exports.donate = (req, res) => {
+  console.log(req.body);
 };
 
 const fileupcloud = function(filename, path) {
