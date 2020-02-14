@@ -3,6 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import jsonwebtoken from "jsonwebtoken";
 import Swal from "sweetalert2";
+import Card from "../../components/Cards";
 
 const Imgtag = props => {
   return (
@@ -84,14 +85,18 @@ const DashboardDonator = props => {
 
       {availableRequests.map(ele => {
         return (
-          <div>
-            <p>{ele.title}</p>
-            <p>{ele.description}</p>
-            <p>{ele.donationTypeAccepted}</p>
-            <p>{ele.estimatedBudget}</p>
-            <Imgtag imggg={ele.images} />
-            <br></br>
-          </div>
+          <Card
+            requestid={ele.requestid}
+            title={ele.title}
+            description={ele.description}
+            donationTypeAccepted={ele.donationTypeAccepted}
+            estimatedBudget={ele.estimatedBudget}
+            images={ele.images}
+            username={ele.username}
+            requesterId={ele.requesterId}
+            createdAt={ele.createdAt}
+            availableBudget={ele.availableBudget}
+          />
         );
       })}
     </div>

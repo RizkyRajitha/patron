@@ -8,11 +8,19 @@ import Header from "../../components/Header";
 import Untitled from "../../images/Untitled.png";
 import Cards from "../../components/Cards";
 import Footer from "../../components/Footer";
+const axios = require("axios");
 
 class Auth extends React.Component {
   state = {};
 
-  componentDidMount = () => {};
+
+  componentDidMount = () => {
+
+
+    const jwt = localStorage.getItem('jwt')
+
+
+  };
   render() {
     return (
       <div className="mainContainer">
@@ -65,10 +73,10 @@ class Auth extends React.Component {
               </p>
             </span>
             <span>
-              <Cards name="Health -Care & Medical Emergencies" />
+              {/* <Cards name="Health -Care & Medical Emergencies" />
               <Cards name="Service requirements" />
               <Cards name="Monetary requirements" />
-              <Cards name="Physical Resources requirements" />
+              <Cards name="Physical Resources requirements" /> */}
             </span>
 
             <div className="SocialButtons"></div>

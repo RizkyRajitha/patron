@@ -32,14 +32,10 @@ var userDonatorSchema = new Schema({
   },
   donations: [
     {
+      requesterId: { type: String },
       requestid: { type: String },
-      lastDonation: { type: String },
-      donationsHis: [
-        {
-          amount: { type: String },
-          donatedAt: { type: String }
-        }
-      ]
+      amount: { type: String },
+      donatedAt: { type: String }
     }
   ]
 });
