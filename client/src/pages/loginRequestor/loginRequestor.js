@@ -57,60 +57,42 @@ class Login extends Component {
       })
       .catch(err => {
         console.log("l>> err" + err);
-      });
-  };
-
-  fileupload = e => {
-    this.setState({ filestoupload: e.target.files });
-
-    var jwt = localStorage.getItem("jwt");
-
-    var config = {
-      headers: {
-        authorization: jwt
-      }
-    };
-
-    const formdata = new FormData();
-
-    for (let index = 0; index < e.target.files.length; index++) {
-      const element = e.target.files[index];
-
-      formdata.append("resobj", element);
-    }
-
-    axios
-      .post("/upload/newpostfiles", formdata, config)
-      .then(result => {
-        console.log(result.body);
-      })
-      .catch(err => {
-        console.log(err);
+        if (err.response.data.message === "invalidcredentials") {
+          Swal.fire("invalid credentials", "", "error");
+        }
       });
   };
 
   render() {
     return (
-      <div>
-        <h1>Login requestor</h1>
+      <div className="container">
+        <div className="jumbotron">
+          <h1 className="display-4">Login Requestor</h1>
 
-        {/* <input onChange={this.fileupload} type="file" multiple></input> */}
+          <hr className="my-4" />
 
-        <form onSubmit={e => this.loginsubmit(e)}>
-          <input
-            type="email"
-            onChange={e => this.setState({ email: e.target.value })}
-          />
-          <br></br>
-          <input
-            type="password"
-            onChange={e => this.setState({ password: e.target.value })}
-          />
+          <form className="lead" onSubmit={e => this.loginsubmit(e)}>
+            <div className="form-group">
+              <input
+                className="form-control logininputwidth"
+                type="email"
+                onChange={e => this.setState({ email: e.target.value })}
+              />
+            </div>
 
-          <button type="submit">login</button>
-        </form>
+            <div className="form-group">
+              <input
+                className="form-control logininputwidth"
+                type="password"
+                onChange={e => this.setState({ password: e.target.value })}
+              />
+            </div>
 
-        {/* <Footer /> */}
+            <button className="btn btn-primary btn-lg" type="submit">
+              login
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

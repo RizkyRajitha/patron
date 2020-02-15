@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import jsonwebtoken from "jsonwebtoken";
 import Swal from "sweetalert2";
 import Card from "../../components/Cards";
+import "./dashboardDonator.css";
 
 const Imgtag = props => {
   return (
@@ -60,9 +61,39 @@ const DashboardDonator = props => {
         });
     } catch (error) {
       console.log("not logged in");
-      this.props.history.push("/logindonor");
+      props.history.push("/logindonor");
     }
   }, []);
+
+  const refresh = () => {
+    var jwt = localStorage.getItem("jwtdonator");
+    var config = {
+      headers: {
+        authorization: jwt
+      }
+    };
+
+    axios
+      .get("/api/donatordashboard", config)
+      .then(res => {
+        console.log(res.data);
+        setusername(res.data.name);
+        setdonatedamountalltime(res.data.donations);
+        //   setavailableRequests(res.data.requests);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    axios
+      .get("/api/getallposts", config)
+      .then(res => {
+        console.log(res.data);
+        setavailableRequests(res.data.requests);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const logout = () => {
     localStorage.removeItem("jwtdonator");
@@ -71,34 +102,58 @@ const DashboardDonator = props => {
 
   return (
     <div>
-      <h1>Doandor dashboard</h1>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          PATRON
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <a className="nav-item nav-link active  " disabled={true}>
+              {username}
+            </a>
 
-      <br />
-      <h2>hello {username}</h2>
-      <br />
-      <br />
-      <h3>donations so far : {donatedamountalltime}$</h3>
+            <a className="nav-item nav-link active  " disabled={true}>
+              donations so far : {donatedamountalltime}$
+            </a>
 
-      <br />
-      <button onClick={() => logout()}>logout</button>
-      <br />
+            <a className="nav-item nav-link" onClick={() => logout()} href="#">
+              logout
+            </a>
+          </div>
+        </div>
+      </nav>
 
-      {availableRequests.map(ele => {
-        return (
-          <Card
-            requestid={ele.requestid}
-            title={ele.title}
-            description={ele.description}
-            donationTypeAccepted={ele.donationTypeAccepted}
-            estimatedBudget={ele.estimatedBudget}
-            images={ele.images}
-            username={ele.username}
-            requesterId={ele.requesterId}
-            createdAt={ele.createdAt}
-            availableBudget={ele.availableBudget}
-          />
-        );
-      })}
+      <div className="container donordashboard">
+        {availableRequests &&
+          availableRequests.map(ele => {
+            return (
+              <Card
+                requestid={ele.requestid}
+                title={ele.title}
+                description={ele.description}
+                donationTypeAccepted={ele.donationTypeAccepted}
+                estimatedBudget={ele.estimatedBudget}
+                images={ele.images}
+                username={ele.username}
+                requesterId={ele.requesterId}
+                createdAt={ele.createdAt}
+                availableBudget={ele.availableBudget}
+                refresh={refresh}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

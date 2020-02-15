@@ -29,6 +29,7 @@ exports.registerRequester = async (req, res) => {
   //If valid data & No existing user with email, create New User in DB, & send welcome email
   const newUser = new Requstor({
     firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     hash: hashed,
     nicNumber: req.body.nic
@@ -38,19 +39,11 @@ exports.registerRequester = async (req, res) => {
     const savedUser = await newUser.save();
     console.log(`New user created: ${newUser.email}`);
 
-    // Send welcome email to the new user
-    const mailData = {
-      email: req.body.email,
-      name: req.body.firstName
-    };
-
-    const responseFromSendgrid = send(mailData);
-    console.log(responseFromSendgrid);
-    res.json({ user_id: savedUser._id, mailerResponse: responseFromSendgrid });
+    res.json({ msg: "success" });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ message: "User is already in use!" });
+      return res.status(400).json({ msg: "dupuser" });
     } else {
       console.log(err);
       console.error("DB save error");
@@ -105,7 +98,7 @@ exports.registerDoantor = async (req, res) => {
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ message: "User is already in use!" });
+      return res.status(400).json({ msg: "dupuser" });
     } else {
       console.log(err);
       console.error("DB save error");

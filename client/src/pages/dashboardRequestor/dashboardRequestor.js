@@ -4,17 +4,7 @@ import jsonwebtoken from "jsonwebtoken";
 import Swal from "sweetalert2";
 import axios from "axios";
 import "./dashboardRequestor.css";
-
-const Imgtag = props => {
-  return (
-    <div>
-      {props.imggg.map(ele => {
-        console.log(ele);
-        return <img src={ele} alt="" />;
-      })}
-    </div>
-  );
-};
+import Card from "../../components/Cards";
 
 const Dashboard = props => {
   const [previoesRequests, setprevioesRequests] = useState([]);
@@ -52,7 +42,7 @@ const Dashboard = props => {
 
   const logout = () => {
     localStorage.removeItem("jwtreq");
-    props.history.push("/loginrequestor");
+    props.history.push("/");
   };
 
   const { register, handleSubmit } = useForm();
@@ -72,7 +62,7 @@ const Dashboard = props => {
     formdata.append("estimatedBudget", data.estimatedBudget);
     formdata.append("donationTypeAccepted", data.donationTypeAccepted);
 
-    var token = localStorage.getItem("jwt");
+    var token = localStorage.getItem("jwtreq");
     var config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -96,7 +86,7 @@ const Dashboard = props => {
             .get("/api/getposts", config)
             .then(res => {
               console.log(res.data);
-              setprevioesRequests(res.data);
+              setprevioesRequests(res.data.requests);
             })
             .catch(err => {
               console.log(err);
@@ -110,61 +100,121 @@ const Dashboard = props => {
 
   return (
     <div>
-      <h1>Dashboard requestor</h1>
-      <button onClick={() => logout()}> logout </button>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          PATRON
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <a className="nav-item nav-link active  " disabled={true}>
+              {Username}
+            </a>
 
-      <h1>{Username}</h1>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {" "}
-        <h2>add new request </h2>
-        <input
-          name="title"
-          required
-          type="text"
-          placeholder="title"
-          ref={register}
-        />
-        <textarea
-          name="description"
-          placeholder="title"
-          ref={register}
-          required
-        ></textarea>
-        <input type="number" name="estimatedBudget" required ref={register} />
-        <select name="donationTypeAccepted" required ref={register}>
-          <option value="physical">physical</option>
-          <option value="financial">financial</option>
-          <option value="humanresource">human resource</option>
-        </select>
-        <input
-          type="file"
-          ref={register}
-          required
-          name="supportingfiles"
-          multiple
-        />
-        <button type="submit">add new request</button>
-      </form>
-
-      <br />
-      <br />
-      <br />
-      <h2>previous requests</h2>
-      <br />
-
-      {previoesRequests.map(ele => {
-        return (
-          <div>
-            <p>{ele.title}</p>
-            <p>{ele.description}</p>
-            <p>{ele.donationTypeAccepted}</p>
-            <p>{ele.estimatedBudget}</p>
-            <Imgtag imggg={ele.images} />
-            <br></br>
+            <a className="nav-item nav-link" onClick={() => logout()} href="#">
+              logout
+            </a>
           </div>
-        );
-      })}
+        </div>
+      </nav>
+
+      <div className="container">
+        <div className="jumbotron">
+          <h1 className="display-4">Login Requestor</h1>
+
+          <hr className="my-4" />
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {" "}
+            <h2>add new request </h2>
+            <div className="form-group">
+              <input
+                className="form-control "
+                name="title"
+                required
+                type="text"
+                placeholder="title"
+                ref={register}
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                className="form-control "
+                name="description"
+                placeholder="description"
+                ref={register}
+                required
+              ></textarea>
+            </div>
+            <div className="form-group">
+              <input
+                className="form-control "
+                type="number"
+                placeholder="Estimated Budget"
+                name="estimatedBudget"
+                required
+                ref={register}
+              />
+            </div>
+            <div className="form-group">
+              <select
+                className="form-control"
+                name="donationTypeAccepted"
+                required
+                ref={register}
+              >
+                <option value="financial">financial</option>
+                <option value="physical">physical</option>
+                <option value="humanresource">human resource</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <input
+                className="form-control "
+                type="file"
+                ref={register}
+                required
+                name="supportingfiles"
+                multiple
+              />
+            </div>
+            <button className="btn btn-primary" type="submit">
+              add new request
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div className="container">
+        <h2>previous requests</h2>
+        <br />
+
+        {previoesRequests &&
+          previoesRequests.map(ele => {
+            return (
+              <Card
+                user="req"
+                title={ele.title}
+                description={ele.description}
+                donationTypeAccepted={ele.donationTypeAccepted}
+                estimatedBudget={ele.estimatedBudget}
+                images={ele.images}
+                createdAt={ele.createdAt}
+                availableBudget={ele.availableBudget}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

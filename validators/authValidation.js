@@ -4,17 +4,21 @@ const Joi = require("joi");
 const registerValidator = body => {
   const schema = Joi.object({
     firstName: Joi.string()
-      .min(5)
+      .min(3)
+      .required(),
+    lastName: Joi.string()
+      .min(3)
       .required(),
     email: Joi.string()
       .email()
       .required(),
     password: Joi.string()
-      .min(6)
+      .min(3)
       .required(),
     nic: Joi.string()
-      .min(10)
-      .max(10)
+    .required(),
+    confirmpassword: Joi.string()
+      .min(3)
       .required()
   });
 
@@ -28,7 +32,7 @@ const loginValidator = body => {
       .email()
       .required(),
     password: Joi.string()
-      .min(6)
+      .min(3)
       .required()
   });
 
@@ -47,6 +51,9 @@ const registerValidatorDonator = body => {
       .email()
       .required(),
     password: Joi.string()
+      .min(3)
+      .required(),
+    confirmpassword: Joi.string()
       .min(3)
       .required()
   });

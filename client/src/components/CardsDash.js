@@ -2,7 +2,6 @@ import React from "react";
 import "./card.css";
 import Swal from "sweetalert2";
 import axios from "axios";
-import moment from "moment";
 
 const Cards = props => {
   const donate = () => {
@@ -10,7 +9,7 @@ const Cards = props => {
       title: "Enter your donation amount",
       input: "number",
       inputAttributes: {
-        max: props.availableBudget
+        max: "10"
       },
       showCancelButton: true,
       confirmButtonText: "Donate",
@@ -54,11 +53,9 @@ const Cards = props => {
       allowOutsideClick: () => !Swal.isLoading()
     }).then(result => {
       console.log(result);
-      props.refresh();
       if (result.value.data) {
         Swal.fire({
-          icon: "success",
-          title: `Successfully Donated`
+          title: `${result.value.data.msg}'s donation`
           // imageUrl: result.value.avatar_url
         });
       }
@@ -66,33 +63,31 @@ const Cards = props => {
   };
 
   return (
-    <div className="cardrequest">
-      <div className="card" style={{ width: "20rem" }}>
-        <img
-          src={props.images && props.images[0]}
-          className="card-img-top"
-          alt="..."
-        />
-        <div className="card-body">
-          <label>{moment(props.createdAt).fromNow()}</label>
+    <div>
+      <div className="cardrequest">
+        <div className="card" style={{ width: "18rem" }}>
+          <img
+            src={props.images && props.images[0]}
+            className="card-img-top"
+            alt="..."
+          />
+          <div className="card-body">
+            <label>{props.createdAt}</label>
 
-          <label hidden={props.user === "req"}>by {props.username}</label>
+            <label>by {props.username}</label>
 
-          <h5 className="card-title">{props.title}</h5>
-          <p className="card-text">{props.description}</p>
+            <h5 className="card-title">{props.title}</h5>
+            <p className="card-text">{props.description}</p>
 
-          <h6> Original budget : {props.estimatedBudget}$</h6>
-          <h6> Remaining Budget :{props.availableBudget}$ </h6>
+            <h6>{props.estimatedBudget}$</h6>
+            <h6>{props.availableBudget}$ remaining </h6>
 
-          <h6>Type : {props.donationTypeAccepted}</h6>
+            <h5>{props.donationTypeAccepted}</h5>
 
-          <button
-            hidden={props.user === "req"}
-            onClick={() => donate()}
-            className="btn btn-primary"
-          >
-            Donate
-          </button>
+            <button onClick={() => donate()} className="btn btn-primary">
+              Donate
+            </button>
+          </div>
         </div>
       </div>
     </div>

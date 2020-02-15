@@ -6,9 +6,9 @@ const ObjectID = require("mongodb").ObjectID;
 const uuidv4 = require("uuid/v4");
 
 cloudinary.config({
-  cloud_name: process.env.clodinary_cloud_name || "",
-  api_key: process.env.clodinary_api_key || "",
-  api_secret: process.env.clodinary_api_secret || ""
+  cloud_name: process.env.clodinary_cloud_name || "dijjqfsto",
+  api_key: process.env.clodinary_api_key || "943785761215535",
+  api_secret: process.env.clodinary_api_secret || "MSfacY2b-OGHnjJLiLni9zfH1R0"
 });
 
 exports.donatorDashboard = async (req, res) => {
@@ -24,7 +24,7 @@ exports.donatorDashboard = async (req, res) => {
 
       var payload = {
         donations: donationSum,
-        name: doc.firstName
+        name: doc.firstName + " " + doc.lastName
       };
 
       res.json(payload);
@@ -40,8 +40,8 @@ exports.getposts = async (req, res) => {
   Requstor.findOne({ _id: req.id })
     .then(doc => {
       var payload = {
-        requests: doc.requests,
-        name: doc.firstName
+        requests: doc.requests.reverse(),
+        name: doc.firstName + " " + doc.lastName
       };
 
       res.json(payload);
@@ -75,7 +75,7 @@ exports.getallposts = (req, res) => {
         });
       });
 
-      res.json({ requests: payload });
+      res.json({ requests: payload.reverse() });
     })
     .catch(err => {
       console.log(err);
@@ -195,7 +195,6 @@ exports.donate = (req, res) => {
         });
 
       // console.log(doc2);
-      res.json({ msg: "success" });
     })
     .catch(err => {
       console.log(err);

@@ -71,6 +71,11 @@
   }
 }
 
+
+.logininputwidth {
+  width: 40%;
+}
+
 /* @ :-moz-user-disabled */
 /* at 600px
 background-position-x: 88%;

@@ -1,3 +1,6 @@
 .cardrequest {
-  padding-bottom: 1%;
+  padding-bottom: 3%;
+  padding-right: 3%;
+  flex-direction: row;
+  justify-content: space-between;
 }
