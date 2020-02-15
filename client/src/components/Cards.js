@@ -65,6 +65,29 @@ const Cards = props => {
     });
   };
 
+  const deletepost = reqid => {
+    console.log(reqid);
+    var tk = localStorage.getItem("jwtreq");
+    console.log(tk);
+    var config = {
+      headers: {
+        authorization: tk
+      }
+    };
+    axios
+      .delete("/api/deletepost/" + reqid, config)
+      .then(result => {
+        console.log(result);
+        if (result.data.msg === "success") {
+          Swal.fire({ title: "Post deleted ", icon: "info" });
+          props.refresh();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="cardrequest">
       <div className="card" style={{ width: "20rem" }}>
@@ -76,7 +99,7 @@ const Cards = props => {
         <div className="card-body">
           <label>{moment(props.createdAt).fromNow()}</label>
 
-          <label hidden={props.user === "req"}>by {props.username}</label>
+          <label hidden={props.user === "req"}> {" "}by {props.username}</label>
 
           <h5 className="card-title">{props.title}</h5>
           <p className="card-text">{props.description}</p>
@@ -89,9 +112,24 @@ const Cards = props => {
           <button
             hidden={props.user === "req"}
             onClick={() => donate()}
-            className="btn btn-primary"
+            disabled={props.availableBudget === "0"}
+            className={
+              props.availableBudget === "0"
+                ? "btn btn-success"
+                : "btn btn-primary"
+            }
           >
-            Donate
+            {props.availableBudget === "0" ? "Completed" : "Donate"}
+          </button>
+
+          <button
+            onClick={() => {
+              deletepost(props.requestid);
+            }}
+            className="btn btn-danger"
+            hidden={props.user !== "req"}
+          >
+            Delete
           </button>
         </div>
       </div>

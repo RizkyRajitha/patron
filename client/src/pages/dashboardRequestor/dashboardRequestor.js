@@ -98,6 +98,26 @@ const Dashboard = props => {
       });
   };
 
+  const refresh = () => {
+    var jwt = localStorage.getItem("jwtreq");
+    var config = {
+      headers: {
+        authorization: jwt
+      }
+    };
+
+    axios
+      .get("/api/getposts", config)
+      .then(res => {
+        console.log(res.data);
+        setprevioesRequests(res.data.requests);
+        setUsername(res.data.name);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -130,13 +150,13 @@ const Dashboard = props => {
 
       <div className="container">
         <div className="jumbotron">
-          <h1 className="display-4">Login Requestor</h1>
+          <h1 className="display-4">Add new request</h1>
 
           <hr className="my-4" />
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {" "}
-            <h2>add new request </h2>
+            {/* <h2>add new request </h2> */}
             <div className="form-group">
               <input
                 className="form-control "
@@ -211,6 +231,8 @@ const Dashboard = props => {
                 images={ele.images}
                 createdAt={ele.createdAt}
                 availableBudget={ele.availableBudget}
+                requestid={ele.requestid}
+                refresh={refresh}
               />
             );
           })}

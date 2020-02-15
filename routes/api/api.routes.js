@@ -47,6 +47,25 @@ exports.getposts = async (req, res) => {
     });
 };
 
+exports.deletepost = async (req, res) => {
+  console.log("delete posts " + req.params.id);
+
+  Requstor.findOneAndUpdate(
+    { _id: req.id },
+    {
+      $pull: { requests: { requestid: req.params.id } }
+    }
+  )
+    .then(doc => {
+      console.log(doc);
+
+      res.json({ msg: "success" });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 exports.getallposts = (req, res) => {
   Requstor.find({ activeState: true })
     .then(docs => {

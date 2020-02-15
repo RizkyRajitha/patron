@@ -22,5 +22,5 @@ router.get("/getallposts", apiroutes.getallposts);
 router.post("/newpost", fileup.array("resobj"), apiroutes.newpost);
 router.post("/donate", apiroutes.donate);
 router.get("/donatordashboard", apiroutes.donatorDashboard);
-
+router.delete("/deletepost/:id", apiroutes.deletepost);
 module.exports = router;
