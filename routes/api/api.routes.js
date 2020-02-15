@@ -5,11 +5,7 @@ const fs = require("fs");
 const ObjectID = require("mongodb").ObjectID;
 const uuidv4 = require("uuid/v4");
 
-cloudinary.config({
-  cloud_name: process.env.clodinary_cloud_name || "dijjqfsto",
-  api_key: process.env.clodinary_api_key || "943785761215535",
-  api_secret: process.env.clodinary_api_secret || "MSfacY2b-OGHnjJLiLni9zfH1R0"
-});
+cloudinary.config({});
 
 exports.donatorDashboard = async (req, res) => {
   console.log("getting posts");
